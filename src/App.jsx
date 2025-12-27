@@ -32,7 +32,7 @@ function App() {
           }
         });
       });
-      console.log(number, from, to,swapValue);
+    console.log(number, from, to, swapValue);
 
   }, [from, to, number]);
 
@@ -42,11 +42,21 @@ function App() {
 
   const swapValue = () => {
     const temp = number;
-    console.log(currencyValue,number);
+    console.log(currencyValue, number);
     setNumber(currencyValue);
     setCurrencyValue(temp);
-    console.log(currencyValue,number);
+    console.log(currencyValue, number);
     setSwap(!swap);
+
+  };
+
+  const swapKey = () => {
+    // Create temp values
+    const tempFrom = to;
+    const tempTo = from;
+
+    setFrom(tempFrom);
+    setTo(tempTo);
 
   };
 
@@ -57,8 +67,8 @@ function App() {
           <h1 className='font-bold text-xl color-blue'>Currency Convertor</h1>
 
 
-          <div className='h-1/3 flex flex-row justify-center items-center border-2 border-white p-4 rounded-lg'>
-            <div className='flex items-center flex-col'>
+          <div className='h-1/3 flex flex-row justify-center items-center border-2 border-white/50 p-4 rounded-lg'>
+            <div className='flex items-center flex-col '>
               <label>From</label>
               <input
                 type="number"
@@ -66,54 +76,59 @@ function App() {
                 inputMode="numeric"
                 value={number}
                 onChange={(e) => setNumber(e.target.value)}
-                className='border-2 border-black ml-4 text-black'
+                className='ml-4 text-black rounded-lg'
               />
             </div>
 
             <div className='ml-10 flex justify-center items-center flex-col'>
-              <label>Currency Type</label>
+              <label className='mb-1'>Currency Type</label>
               <select
-                className='text-black'
+                value={from}
+                className='text-black rounded-lg'
                 onChange={(e) => setFrom(e.target.options[e.target.selectedIndex].text.toLowerCase())}
               >
                 {currencies.map(([code, rate]) => (
-                  <option key={code} value={rate}>
-                    {code.toUpperCase()}
+                  <option key={code} value={code}>
+                    {code}
                   </option>
                 ))}
               </select>
             </div>
           </div>
 
-          <button onClick={swapValue}
-            className='border-2 border-white rounded-xl p-1 -m-1 bg-gray-700 hover:bg-gray-600'
+          <button onClick={swapKey}
+            className='  rounded-xl p-1 -m-1 bg-gray-700 hover:bg-gray-600'
           >Swap</button>
 
-          <div className='h-1/3 flex flex-row justify-center items-center border-2 border-white p-4 rounded-lg'>
+          <div className='h-1/3 flex flex-row justify-center items-center border-2 border-white/50 p-4 rounded-lg'>
             <div className='flex items-center flex-col'>
               <label>To</label>
               <input
                 type="text"
                 readOnly
-                className="border-2 border-black ml-4 text-gray-900 font-bold text-lg"
+                className="border-2 border-black ml-4 text-gray-900 font-bold text-lg rounded-lg"
                 value={currencyValue}
               />
             </div>
 
             <div className='ml-10 flex justify-center items-center flex-col'>
-              <label>Currency Type</label>
-              <select className='text-black'
-
+              <label className='mb-1'>Currency Type</label>
+              <select className='text-black rounded-lg'
+                value={to}
                 onChange={(e) => setTo(e.target.options[e.target.selectedIndex].text.toLowerCase())}
               >
                 {currencies.map(([code, rate]) => (
-                  <option key={code} value={rate}>
-                    {code.toUpperCase()}
+                  <option key={code} value={code}>
+                    {code}
                   </option>
                 ))}
               </select>
             </div>
           </div>
+
+          <button onClick={handleChange}
+            className='w-full p-1 m-1 bg-gray-700 hover:bg-gray-600 border-2 border-white/50 rounded-xl'
+          >Convert {from.toUpperCase()} to {to.toUpperCase()}</button>
         </div>
       </div>
     </>
